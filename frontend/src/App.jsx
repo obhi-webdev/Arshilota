@@ -1,35 +1,30 @@
 import { Route, Routes } from "react-router-dom";
 
+import MetaPixel from "./components/MetaPixel";
+
 import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-
 import PaymentSuccess from "./pages/PaymentSuccess";
-import PaymentSubmitted from "./pages/PaymentSubmitted";
-import PaymentFailed from "./pages/PaymentFailed";
-import PaymentCancelled from "./pages/PaymentCancelled";
-
 import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
+    <>
+      <MetaPixel />
 
-      <Route path="/cart" element={<Cart />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
 
-      <Route path="/checkout" element={<Checkout />} />
+        <Route path="/cart" element={<Cart />} />
 
-      <Route path="/payment/success" element={<PaymentSuccess />} />
+        <Route path="/checkout" element={<Checkout />} />
 
-      <Route path="/payment/submitted" element={<PaymentSubmitted />} />
+        <Route path="/payment/success" element={<PaymentSuccess />} />
 
-      <Route path="/payment/failed" element={<PaymentFailed />} />
-
-      <Route path="/payment/cancelled" element={<PaymentCancelled />} />
-
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 };
 
