@@ -8,8 +8,8 @@ const Navbar = () => {
   const { cartCount } = useCart();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/[0.04] bg-white/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-[74px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 border-b border-black/4 bg-white/90 backdrop-blur-xl">
+      <div className="mx-auto flex h-18.5 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center">
           <img
             src="/images/logo.png"
@@ -38,13 +38,6 @@ const Navbar = () => {
             className="text-sm font-medium text-gray-600 transition hover:text-brand-700"
           >
             বৈশিষ্ট্য
-          </a>
-
-          <a
-            href="#faq"
-            className="text-sm font-medium text-gray-600 transition hover:text-brand-700"
-          >
-            FAQ
           </a>
         </nav>
 
