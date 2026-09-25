@@ -2,11 +2,24 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema(
   {
+    /*
+    |--------------------------------------------------------------------------
+    | Order Number
+    |--------------------------------------------------------------------------
+    */
+
     orderNumber: {
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Customer Information
+    |--------------------------------------------------------------------------
+    */
 
     customer: {
       name: {
@@ -47,48 +60,74 @@ const orderSchema = new mongoose.Schema(
       },
     },
 
+    /*
+    |--------------------------------------------------------------------------
+    | Product Information
+    |--------------------------------------------------------------------------
+    */
+
     product: {
       productId: {
         type: String,
         required: true,
+        trim: true,
       },
 
       name: {
         type: String,
         required: true,
+        trim: true,
       },
 
       unitPrice: {
         type: Number,
         required: true,
+        min: 0,
       },
 
       quantity: {
         type: Number,
         required: true,
         min: 1,
+        max: 10,
       },
     },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Price
+    |--------------------------------------------------------------------------
+    */
 
     subtotal: {
       type: Number,
       required: true,
+      min: 0,
     },
 
     deliveryCharge: {
       type: Number,
       required: true,
+      min: 0,
     },
 
     total: {
       type: Number,
       required: true,
+      min: 0,
     },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Payment
+    |--------------------------------------------------------------------------
+    */
 
     paymentMethod: {
       type: String,
       enum: ["COD"],
       default: "COD",
+      required: true,
     },
 
     paymentStatus: {
@@ -96,6 +135,12 @@ const orderSchema = new mongoose.Schema(
       enum: ["unpaid", "paid"],
       default: "unpaid",
     },
+
+    /*
+    |--------------------------------------------------------------------------
+    | Order Status
+    |--------------------------------------------------------------------------
+    */
 
     orderStatus: {
       type: String,
@@ -109,5 +154,26 @@ const orderSchema = new mongoose.Schema(
     timestamps: true,
   },
 );
+
+/*
+|--------------------------------------------------------------------------
+| Indexes
+|--------------------------------------------------------------------------
+|
+| Same phone number-এর recent order দ্রুত search করার জন্য।
+| Controller-এর 2-hour duplicate order protection এই index ব্যবহার করবে।
+|
+*/
+
+orderSchema.index({
+  "customer.phone": 1,
+  createdAt: -1,
+});
+
+/*
+|--------------------------------------------------------------------------
+| Model
+|--------------------------------------------------------------------------
+*/
 
 module.exports = mongoose.model("Order", orderSchema);
