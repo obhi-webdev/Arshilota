@@ -23,9 +23,9 @@ const orderSchema = new mongoose.Schema(
 
       email: {
         type: String,
-        required: true,
         trim: true,
         lowercase: true,
+        default: "",
       },
 
       district: {
@@ -36,8 +36,8 @@ const orderSchema = new mongoose.Schema(
 
       postcode: {
         type: String,
-        required: true,
         trim: true,
+        default: "",
       },
 
       address: {
@@ -87,70 +87,26 @@ const orderSchema = new mongoose.Schema(
 
     paymentMethod: {
       type: String,
-
-      enum: ["COD", "BKASH_PERSONAL", "NAGAD_PERSONAL", "ROCKET_PERSONAL"],
-
-      required: true,
+      enum: ["COD"],
+      default: "COD",
     },
 
     paymentStatus: {
       type: String,
-
-      enum: ["unpaid", "verification_pending", "paid", "rejected"],
-
+      enum: ["unpaid", "paid"],
       default: "unpaid",
-    },
-
-    manualPayment: {
-      senderPhone: {
-        type: String,
-        default: null,
-      },
-
-      transactionId: {
-        type: String,
-        default: null,
-        trim: true,
-      },
-
-      submittedAt: {
-        type: Date,
-        default: null,
-      },
-
-      verifiedAt: {
-        type: Date,
-        default: null,
-      },
     },
 
     orderStatus: {
       type: String,
 
-      enum: [
-        "pending",
-        "confirmed",
-        "processing",
-        "shipped",
-        "delivered",
-        "cancelled",
-      ],
+      enum: ["confirmed", "processing", "shipped", "delivered", "cancelled"],
 
-      default: "pending",
+      default: "confirmed",
     },
   },
   {
     timestamps: true,
-  },
-);
-
-orderSchema.index(
-  {
-    "manualPayment.transactionId": 1,
-  },
-  {
-    unique: true,
-    sparse: true,
   },
 );
 
